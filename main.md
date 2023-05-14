@@ -104,3 +104,80 @@ int main() {
 
 
 ```
+
+## DFS
+
+```
+using System;
+using System.Collections.Generic;
+
+class Graph
+{
+    private int numVertices;
+
+    private List<int>[] adjacencyList; //存放點的相鄰邊
+
+    public Graph(int numVertices)
+    {
+        this.numVertices = numVertices;
+
+        adjacencyList = new List<int>[numVertices];
+
+        for (int i = 0; i < numVertices; i++)
+        {
+            adjacencyList[i] = new List<int>();
+        }
+    }
+
+    public void AddEdge(int source, int destination)
+    {
+        adjacencyList[ source ].Add( destination );
+    }
+
+
+
+    public void DFS(int startVertex)
+    {
+        bool[] visited = new bool[numVertices];
+
+        DFSUtil(startVertex, visited);
+    }
+
+    private void DFSUtil(int vertex, bool[] visited)
+    {
+        visited[vertex] = true;
+
+        Console.Write(vertex + " ");
+
+        foreach (int neighbor in adjacencyList[vertex])
+        {
+            if (!visited[neighbor])
+            {
+                DFSUtil(neighbor, visited);
+            }
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // 基於頂點數量建構圖
+        Graph graph = new Graph(5);
+
+        //加入邊
+        graph.AddEdge(0, 1);
+        graph.AddEdge(0, 2);
+        graph.AddEdge(1, 3);
+        graph.AddEdge(2, 3);
+        graph.AddEdge(2, 4);
+        graph.AddEdge(3, 4);
+
+        Console.WriteLine("深度優先走訪结果:");
+
+        graph.DFS(0);
+    }
+}
+
+```
